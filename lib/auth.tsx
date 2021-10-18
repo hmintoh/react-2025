@@ -4,6 +4,7 @@ import {
   signInWithPopup,
   GithubAuthProvider,
   signOut,
+  User as FirebaseUser,
 } from 'firebase/auth';
 import { firebase } from 'lib/firebase';
 
@@ -11,22 +12,22 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-const AuthContext = createContext(undefined);
+const AuthContext = createContext<any>(null);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<any>(undefined);
+  const [user, setUser] = useState<FirebaseUser | null>(null);
   const auth = getAuth(firebase);
   const provider = new GithubAuthProvider();
 
-  const signInWithGithub = () => {
+  const signInWithGithub = (): void => {
     signInWithPopup(auth, provider).then((res) => {
-      setUser(res.user);
+      setUser(res.user as any);
     });
   };
 
-  const signout = () => {
+  const signout = (): void => {
     signOut(auth).then(() => {
-      setUser(undefined);
+      setUser(null);
     });
   };
 
