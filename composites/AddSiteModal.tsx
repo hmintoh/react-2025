@@ -1,4 +1,6 @@
 import { NextPage } from 'next';
+import { useAuth } from 'lib/auth';
+import { createSite } from 'lib/db';
 import { useForm } from 'react-hook-form';
 import {
   Modal,
@@ -12,14 +14,28 @@ import {
   FormLabel,
   Input,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 
 const AddSiteModal = (): NextPage => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, handleSubmit } = useForm();
+  const toast = useToast();
+  const auth = useAuth();
 
   const onSubmit = (data) => {
-    console.log(data);
+    createSite({
+      authorId: auth.user.uid,
+      createdAt: new Date().toISOString(),
+      ...data,
+    });
+    toast({
+      position: 'bottom',
+      isClosable: true,
+      status: 'success',
+      title: 'Success!',
+      description: "We've added your site.",
+    });
     onClose();
   };
   return (
@@ -40,7 +56,7 @@ const AddSiteModal = (): NextPage => {
               <Input
                 type="text"
                 placeholder="My Site"
-                {...register('name', { required: true })}
+                {...register('site', { required: true })}
               />
             </FormControl>
 
@@ -49,7 +65,7 @@ const AddSiteModal = (): NextPage => {
               <Input
                 type="text"
                 placeholder="https://website.com"
-                {...register('link', { required: true })}
+                {...register('url', { required: true })}
               />
             </FormControl>
           </ModalBody>
