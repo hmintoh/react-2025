@@ -1,7 +1,8 @@
 import { NextPage } from 'next';
-import { Button, Text, Heading, Box } from '@chakra-ui/react';
+import { Text, Heading, Box } from '@chakra-ui/react';
 
 import { DashboardLayout } from 'components/DashboardLayout';
+import { AddSiteModal } from 'composites/AddSiteModal';
 
 const DashboardEmptyState = (): NextPage => {
   return (
@@ -13,9 +14,8 @@ const DashboardEmptyState = (): NextPage => {
         <Text mt={2} mb={4}>
           Welcome 👋 Let&apos;s get started.
         </Text>
-        <Button variant="solid" colorScheme="teal">
-          Add your first site
-        </Button>
+
+        <AddSiteModal />
       </Box>
     </DashboardLayout>
   );
