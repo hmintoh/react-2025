@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
-import { useAuth } from 'lib/auth';
 import Head from 'next/head';
-
-import { Button, Flex } from '@chakra-ui/react';
+import { useAuth } from 'lib/auth';
+import { Button, Flex, Icon } from '@chakra-ui/react';
+import { CgDesignmodo } from 'react-icons/cg';
 
 const Home: NextPage = () => {
   const auth = useAuth();
@@ -19,8 +19,14 @@ const Home: NextPage = () => {
         <title>Fast Feedback</title>
       </Head>
 
+      <Icon as={CgDesignmodo} w={10} h={10} color="teal.700" />
+
+      <br />
+
       {auth.user ? (
-        <Button onClick={() => auth.signout()}>Sign out</Button>
+        <Button as="a" href="/dashboard">
+          View dashboard
+        </Button>
       ) : (
         <Button onClick={() => auth.signInWithGithub()}>Sign in</Button>
       )}

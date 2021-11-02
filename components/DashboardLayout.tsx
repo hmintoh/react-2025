@@ -8,6 +8,7 @@ import {
   Link,
   Stack,
   Avatar,
+  Button,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -31,13 +32,23 @@ const DashboardLayout = ({
       <Flex direction="row" padding={4} justifyContent="space-between">
         <Stack isInline spacing={4} alignItems="center">
           <Icon as={CgDesignmodo} w={10} h={10} color="teal.700" />
-          <Link>Feedback</Link>
           <Link>Sites</Link>
+          <Link>Feedback</Link>
         </Stack>
-        <Flex alignItems="center">
-          <Link mr={4}>Account</Link>
-          <Avatar size="sm" name={auth.user.name} src={auth.user.photoUrl} />
-        </Flex>
+        {auth.user && (
+          <Flex alignItems="center">
+            <Button
+              as="a"
+              href="/"
+              variant="link"
+              onClick={() => auth.signout()}
+              mr={4}
+            >
+              Logout
+            </Button>
+            <Avatar size="sm" name={auth.user.name} src={auth.user.photoUrl} />
+          </Flex>
+        )}
       </Flex>
 
       <Flex direction="column" backgroundColor="gray.50" padding={4}>
