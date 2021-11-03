@@ -1,7 +1,7 @@
-import { NextPage } from 'next';
 import { useAuth } from 'lib/auth';
 import { createSite } from 'lib/db';
 import { useForm } from 'react-hook-form';
+import { useSWRConfig } from 'swr';
 import {
   Modal,
   ModalOverlay,
@@ -16,19 +16,31 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
+import { Site } from 'utils/types';
 
-const AddSiteModal = (): NextPage => {
+interface AddSiteModalProps {
+  ctaLabel: string;
+}
+
+interface DataProps {
+  site: string;
+  url: string;
+}
+
+const AddSiteModal = ({ ctaLabel }: AddSiteModalProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { register, handleSubmit } = useForm();
   const toast = useToast();
   const auth = useAuth();
+  const { mutate } = useSWRConfig();
 
-  const onSubmit = (data) => {
-    createSite({
+  const onSubmit = async (data: DataProps) => {
+    const newSite: Site = {
       authorId: auth.user.uid,
       createdAt: new Date().toISOString(),
       ...data,
-    });
+    };
+    mutate('/api/sites', createSite(newSite));
     toast({
       position: 'bottom',
       isClosable: true,
@@ -38,10 +50,11 @@ const AddSiteModal = (): NextPage => {
     });
     onClose();
   };
+
   return (
     <>
       <Button onClick={onOpen} colorScheme="teal">
-        Add your first site
+        {ctaLabel}
       </Button>
 
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
@@ -63,7 +76,7 @@ const AddSiteModal = (): NextPage => {
             <FormControl mb={4} isRequired>
               <FormLabel>Link</FormLabel>
               <Input
-                type="text"
+                type="url"
                 placeholder="https://website.com"
                 {...register('url', { required: true })}
               />

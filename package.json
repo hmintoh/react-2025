@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "tsc:lint": "tsx"
+    "tsc:lint": "tsx",
+    "watch": "tsc --watch --noEmit --project './tsconfig.json'"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.10",

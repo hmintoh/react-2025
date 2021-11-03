@@ -1,5 +1,4 @@
-import { ReactNode } from 'react';
-import type { NextPage } from 'next';
+import { ReactElement } from 'react';
 import { useAuth } from 'lib/auth';
 import {
   Heading,
@@ -16,15 +15,14 @@ import {
 } from '@chakra-ui/react';
 import { CgDesignmodo } from 'react-icons/cg';
 
+import { AddSiteModal } from 'composites/AddSiteModal';
+
 interface DashboardLayoutProps {
   title: string;
-  children: ReactNode;
+  children: ReactElement;
 }
 
-const DashboardLayout = ({
-  title,
-  children,
-}: DashboardLayoutProps): NextPage => {
+const DashboardLayout = ({ title, children }: DashboardLayoutProps) => {
   const auth = useAuth();
 
   return (
@@ -59,9 +57,13 @@ const DashboardLayout = ({
             </BreadcrumbItem>
           </Breadcrumb>
 
-          <Heading as="h1" size="2xl">
-            {title}
-          </Heading>
+          <Flex direction="row" justify="space-between" align="center">
+            <Heading as="h1" size="2xl">
+              {title}
+            </Heading>
+
+            <AddSiteModal ctaLabel={'+ Add Site'} />
+          </Flex>
 
           {children}
         </Box>

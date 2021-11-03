@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import { parseISO, format } from 'date-fns';
 import {
   Box,
@@ -17,10 +16,10 @@ import { Site } from 'utils/types';
 import { AddSiteModal } from 'composites/AddSiteModal';
 
 interface SitesDashboardProps {
-  data?: Site;
+  data?: Site[];
 }
 
-const SitesDashboard = ({ data }: SitesDashboardProps): NextPage => {
+const SitesDashboard = ({ data }: SitesDashboardProps) => {
   return data.length === 0 ? (
     <Box backgroundColor="white" padding={8} mt={8} textAlign="center">
       <Heading as="h2" size="md">
@@ -30,30 +29,34 @@ const SitesDashboard = ({ data }: SitesDashboardProps): NextPage => {
         Let&apos;s get started.
       </Text>
 
-      <AddSiteModal />
+      <AddSiteModal ctaLabel={'Add your first site'} />
     </Box>
   ) : (
     <Box backgroundColor="white" padding={8} mt={8} textAlign="center">
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>Name</Th>
-            <Th>Site Name</Th>
+            <Th>Website</Th>
+            <Th>Site URL</Th>
             <Th>Feedback URL</Th>
             <Th>Date Added</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((d, i) => (
-            <Tr key={i}>
-              <Td>{d.site}</Td>
-              <Td>{d.url}</Td>
-              <Td>
-                <Link>View feedback</Link>
-              </Td>
-              <Td>{format(parseISO(d.createdAt), 'PPpp')}</Td>
-            </Tr>
-          ))}
+          {data
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((d, i) => (
+              <Tr key={i}>
+                <Td>
+                  <strong>{d.site}</strong>
+                </Td>
+                <Td>{d.url}</Td>
+                <Td>
+                  <Link>View feedback</Link>
+                </Td>
+                <Td>{format(parseISO(d.createdAt), 'PPpp')}</Td>
+              </Tr>
+            ))}
         </Tbody>
       </Table>
     </Box>
