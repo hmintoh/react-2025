@@ -6,6 +6,7 @@ import {
   doc,
   collection,
 } from 'firebase/firestore';
+import { Site } from 'utils/types';
 
 const db = getFirestore(firebase);
 
@@ -19,7 +20,7 @@ const createUser = async (uid, data): Promise<void> => {
   }
 };
 
-const createSite = async (data): Promise<void> => {
+const createSite = async (data: Site): Promise<void> => {
   try {
     const docRef = collection(db, 'sites');
     await addDoc(docRef, data, { merge: true });

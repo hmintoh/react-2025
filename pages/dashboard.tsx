@@ -1,18 +1,22 @@
 import type { NextPage } from 'next';
-import { useAuth } from 'lib/auth';
+import useSWR from 'swr';
+import { fetcher } from 'utils/fetcher';
 import { Flex, Text } from '@chakra-ui/react';
 
-import { DashboardEmptyState } from 'composites/DashboardEmptyState';
+import { DashboardLayout } from 'components/DashboardLayout';
+import { SitesDashboard } from 'composites/SitesDashboard';
 
 const Dashboard = (): NextPage => {
-  const auth = useAuth();
+  const { data } = useSWR('/api/sites', fetcher);
 
-  return !auth.user ? (
+  return !data ? (
     <Flex direction="column" height="100vh" align="center" justify="center">
       <Text>Loading...</Text>
     </Flex>
   ) : (
-    <DashboardEmptyState />
+    <DashboardLayout title="My Sites">
+      <SitesDashboard data={data} />
+    </DashboardLayout>
   );
 };
 

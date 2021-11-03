@@ -19,7 +19,8 @@
       "pages/*": ["pages/*"],
       "styles/*": ["styles/*"],
       "componenets/*": ["componenets/*"],
-      "composites/*": ["composites/*"]
+      "composites/*": ["composites/*"],
+      "utils/*": ["utils/*"]
     },
     "strict": false
   },
