@@ -14,7 +14,7 @@ const Dashboard = () => {
     </Flex>
   ) : (
     <DashboardLayout title="My Sites">
-      <SitesDashboard data={data || []} />
+      <SitesDashboard data={data.results || []} />
     </DashboardLayout>
   );
 };

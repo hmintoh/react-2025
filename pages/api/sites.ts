@@ -4,11 +4,11 @@ import { getAllSites } from 'lib/db-admin';
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<SiteRes[]>
+  res: NextApiResponse<SiteRes[] | unknown>
 ) => {
-  const sites: SiteRes[] = await getAllSites();
+  const { error, results } = await getAllSites();
 
-  res.status(200).json(sites);
+  error ? res.status(500).json({ error }) : res.status(200).json({ results });
 };
 
 export default handler;

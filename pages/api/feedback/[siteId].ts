@@ -4,12 +4,12 @@ import { getAllFeedback } from 'lib/db-admin';
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<FeedbackRes[]>
+  res: NextApiResponse<FeedbackRes[] | unknown>
 ) => {
   const siteId = req.query.siteId as string;
-  const feedback = await getAllFeedback(siteId);
+  const { error, results } = await getAllFeedback(siteId);
 
-  res.status(200).json(feedback);
+  error ? res.status(500).json({ error }) : res.status(200).json({ results });
 };
 
 export default handler;

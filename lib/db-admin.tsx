@@ -10,28 +10,36 @@ import { FeedbackRes, SiteRes } from 'utils/types';
 
 const db = getFirestore(firebase);
 
-const getAllFeedback = async (siteId: string): Promise<FeedbackRes[]> => {
-  const feedback: FeedbackRes[] = [];
-  const snapshot = await getDocs(
-    query(collection(db, 'feedback'), where('siteId', '==', siteId))
-  );
+const getAllFeedback = async (siteId: string) => {
+  try {
+    const results: FeedbackRes[] = [];
+    const snapshot = await getDocs(
+      query(collection(db, 'feedback'), where('siteId', '==', siteId))
+    );
 
-  snapshot.forEach((doc) => {
-    feedback.push({ id: doc.id, ...doc.data() } as FeedbackRes);
-  });
+    snapshot.forEach((doc) => {
+      results.push({ id: doc.id, ...doc.data() } as FeedbackRes);
+    });
 
-  return feedback;
+    return { results };
+  } catch (error) {
+    return { error };
+  }
 };
 
-const getAllSites = async (): Promise<SiteRes[]> => {
-  const sites: SiteRes[] = [];
-  const snapshot = await getDocs(collection(db, 'sites'));
+const getAllSites = async () => {
+  try {
+    const results: SiteRes[] = [];
+    const snapshot = await getDocs(collection(db, 'sites'));
 
-  snapshot.forEach((doc) =>
-    sites.push({ id: doc.id, ...doc.data() } as SiteRes)
-  );
+    snapshot.forEach((doc) =>
+      results.push({ id: doc.id, ...doc.data() } as SiteRes)
+    );
 
-  return sites;
+    return { results };
+  } catch (error) {
+    return { error };
+  }
 };
 
 export { getAllFeedback, getAllSites };
