@@ -1,4 +1,4 @@
-import { parseISO, format } from 'date-fns';
+import { parseISO, format, compareDesc } from 'date-fns';
 import {
   Box,
   Heading,
@@ -44,10 +44,8 @@ const SitesDashboard = ({ data }: SitesDashboardProps) => {
         </Thead>
         <Tbody>
           {data
-            .sort(
-              (a, b) =>
-                new Date(b.createdAt).valueOf() -
-                new Date(a.createdAt).valueOf()
+            .sort((a, b) =>
+              compareDesc(parseISO(a.createdAt), parseISO(b.createdAt))
             )
             .map((d, i) => (
               <Tr key={i}>

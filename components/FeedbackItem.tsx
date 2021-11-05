@@ -2,7 +2,7 @@ import { parseISO, format } from 'date-fns';
 import { FeedbackRes } from 'utils/types';
 import { Box, Heading, Text } from '@chakra-ui/react';
 
-const Feedback = ({ author, createdAt, text }: FeedbackRes) => {
+const FeedbackItem = ({ author, createdAt, text }: FeedbackRes) => {
   return (
     <Box mb={4}>
       <Heading as="h4" size="md" color="gray.800">
@@ -18,4 +18,4 @@ const Feedback = ({ author, createdAt, text }: FeedbackRes) => {
   );
 };
 
-export { Feedback };
+export { FeedbackItem };
