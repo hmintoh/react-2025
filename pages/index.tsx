@@ -1,10 +1,9 @@
-import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useAuth } from 'lib/auth';
 import { Button, Flex, Icon } from '@chakra-ui/react';
 import { CgDesignmodo } from 'react-icons/cg';
 
-const Home: NextPage = () => {
+const Home = () => {
   const auth = useAuth();
 
   return (

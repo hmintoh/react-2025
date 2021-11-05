@@ -14,18 +14,11 @@ import {
 } from 'firebase/auth';
 import { firebase } from 'lib/firebase';
 import { createUser } from 'lib/db';
+import { User } from 'utils/types';
 
 interface AuthProviderProps {
   children: ReactNode;
 }
-
-type User = {
-  uid: string;
-  name: string;
-  email: string;
-  provider: string;
-  photoUrl: string;
-};
 
 const AuthContext = createContext<any>(null);
 

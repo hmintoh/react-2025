@@ -1,4 +1,3 @@
-import type { NextPage } from 'next';
 import useSWR from 'swr';
 import { fetcher } from 'utils/fetcher';
 import { Flex, Text } from '@chakra-ui/react';
@@ -6,7 +5,7 @@ import { Flex, Text } from '@chakra-ui/react';
 import { DashboardLayout } from 'components/DashboardLayout';
 import { SitesDashboard } from 'composites/SitesDashboard';
 
-const Dashboard = (): NextPage => {
+const Dashboard = () => {
   const { data } = useSWR('/api/sites', fetcher);
 
   return !data ? (
@@ -15,7 +14,7 @@ const Dashboard = (): NextPage => {
     </Flex>
   ) : (
     <DashboardLayout title="My Sites">
-      <SitesDashboard data={data} />
+      <SitesDashboard data={data || []} />
     </DashboardLayout>
   );
 };

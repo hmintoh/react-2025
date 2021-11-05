@@ -16,7 +16,7 @@ import { Site } from 'utils/types';
 import { AddSiteModal } from 'composites/AddSiteModal';
 
 interface SitesDashboardProps {
-  data?: Site[];
+  data: Site[] | [];
 }
 
 const SitesDashboard = ({ data }: SitesDashboardProps) => {
@@ -44,7 +44,11 @@ const SitesDashboard = ({ data }: SitesDashboardProps) => {
         </Thead>
         <Tbody>
           {data
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .sort(
+              (a, b) =>
+                new Date(b.createdAt).valueOf() -
+                new Date(a.createdAt).valueOf()
+            )
             .map((d, i) => (
               <Tr key={i}>
                 <Td>

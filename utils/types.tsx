@@ -1,8 +1,16 @@
 type Site = {
   authorId: string;
-  createdAt: Date;
+  createdAt: string;
   site: string;
   url: string;
 };
 
-export { Site };
+type User = {
+  uid: string;
+  name: string;
+  email: string;
+  provider: string;
+  photoUrl: string;
+};
+
+export type { Site, User };
