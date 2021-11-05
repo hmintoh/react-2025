@@ -85,19 +85,19 @@ export default SiteFeedback;
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const siteId = context.params!.siteId as string;
-  const feedback = await getAllFeedback(siteId);
+  const { results } = await getAllFeedback(siteId);
 
   return {
     props: {
-      initialFeedback: feedback,
+      initialFeedback: results,
     },
     revalidate: 1,
   };
 };
 
 export const getStaticPaths = async () => {
-  const sites = await getAllSites();
-  const paths = sites.map((site) => ({
+  const { results } = await getAllSites();
+  const paths = results!.map((site) => ({
     params: {
       siteId: site.id,
     },

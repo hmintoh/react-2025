@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { parseISO, format, compareDesc } from 'date-fns';
 import {
   Box,
@@ -9,14 +10,14 @@ import {
   Tr,
   Th,
   Td,
-  Link,
+  Link as ChakraLink,
 } from '@chakra-ui/react';
-import { Site } from 'utils/types';
+import { SiteRes } from 'utils/types';
 
 import { AddSiteModal } from 'composites/AddSiteModal';
 
 interface SitesDashboardProps {
-  data: Site[] | [];
+  data: SiteRes[] | [];
 }
 
 const SitesDashboard = ({ data }: SitesDashboardProps) => {
@@ -54,7 +55,9 @@ const SitesDashboard = ({ data }: SitesDashboardProps) => {
                 </Td>
                 <Td>{d.url}</Td>
                 <Td>
-                  <Link>View feedback</Link>
+                  <Link href={`/sites/${d.id}`} passHref>
+                    <ChakraLink>View feedback</ChakraLink>
+                  </Link>
                 </Td>
                 <Td>{format(parseISO(d.createdAt), 'PPpp')}</Td>
               </Tr>
