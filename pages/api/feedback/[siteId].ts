@@ -1,36 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from 'firebase/firestore';
-import { firebase } from 'lib/firebase';
-import { Feedback } from 'utils/types';
+import { FeedbackRes } from 'utils/types';
+import { getAllFeedback } from 'lib/db-admin';
 
-interface Data extends Feedback {
-  id: string;
-}
-
-const db = getFirestore(firebase);
-
-const getFeedback = async (
+const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<Data[]>
+  res: NextApiResponse<FeedbackRes[]>
 ) => {
   const siteId = req.query.siteId as string;
-  const feedback: Data[] = [];
-
-  const snapshot = await getDocs(
-    query(collection(db, 'feedback'), where('siteId', '==', siteId))
-  );
-
-  snapshot.forEach((doc) => {
-    feedback.push({ id: doc.id, ...doc.data() } as Data);
-  });
+  const feedback = await getAllFeedback(siteId);
 
   res.status(200).json(feedback);
 };
 
-export default getFeedback;
+export default handler;

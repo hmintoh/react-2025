@@ -24,4 +24,12 @@ type Feedback = {
   authorId: string;
 };
 
-export type { Site, User, Feedback };
+type SiteRes = Site & {
+  id: string;
+};
+
+type FeedbackRes = Feedback & {
+  id: string;
+};
+
+export type { Site, SiteRes, User, Feedback, FeedbackRes };
