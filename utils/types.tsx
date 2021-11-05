@@ -13,4 +13,15 @@ type User = {
   photoUrl: string;
 };
 
-export type { Site, User };
+type Feedback = {
+  provider: string;
+  siteId: string;
+  text: string;
+  rating: number;
+  status: string;
+  author: string;
+  createdAt: string;
+  authorId: string;
+};
+
+export type { Site, User, Feedback };
