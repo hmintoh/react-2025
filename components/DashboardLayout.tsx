@@ -13,7 +13,7 @@ import {
   BreadcrumbLink,
   Box,
 } from '@chakra-ui/react';
-import { CgDesignmodo } from 'react-icons/cg';
+import { FaKiwiBird } from 'react-icons/fa';
 
 import { AddSiteModal } from 'composites/AddSiteModal';
 
@@ -29,7 +29,7 @@ const DashboardLayout = ({ title, children }: DashboardLayoutProps) => {
     <Flex direction="column" height="100vh">
       <Flex direction="row" padding={4} justifyContent="space-between">
         <Stack isInline spacing={4} alignItems="center">
-          <Icon as={CgDesignmodo} w={10} h={10} color="teal.700" />
+          <Icon as={FaKiwiBird} w={10} h={10} color="teal.700" />
           <Link>Sites</Link>
           <Link>Feedback</Link>
         </Stack>

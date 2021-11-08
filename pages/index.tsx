@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useAuth } from 'lib/auth';
 import { Button, Flex, Icon } from '@chakra-ui/react';
-import { CgDesignmodo } from 'react-icons/cg';
+import { FaGithub, FaGoogle, FaKiwiBird } from 'react-icons/fa';
 
 const Home = () => {
   const auth = useAuth();
@@ -18,7 +18,7 @@ const Home = () => {
         <title>Fast Feedback</title>
       </Head>
 
-      <Icon as={CgDesignmodo} w={10} h={10} color="teal.700" />
+      <Icon as={FaKiwiBird} w={10} h={10} color="teal.700" />
 
       <br />
 
@@ -27,7 +27,21 @@ const Home = () => {
           View dashboard
         </Button>
       ) : (
-        <Button onClick={() => auth.signInWithGithub()}>Sign in</Button>
+        <>
+          <Button
+            onClick={() => auth.signInWithGithub()}
+            leftIcon={<Icon as={FaGithub} color="teal.700" />}
+          >
+            Sign in with Github
+          </Button>
+
+          <Button
+            onClick={() => auth.signInWithGoogle()}
+            leftIcon={<Icon as={FaGoogle} color="teal.700" />}
+          >
+            Sign in with Google
+          </Button>
+        </>
       )}
     </Flex>
   );

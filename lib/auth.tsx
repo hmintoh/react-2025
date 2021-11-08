@@ -9,6 +9,7 @@ import {
   getAuth,
   signInWithPopup,
   GithubAuthProvider,
+  GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
@@ -25,7 +26,6 @@ const AuthContext = createContext<any>(null);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const auth = getAuth(firebase);
-  const provider = new GithubAuthProvider();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -48,6 +48,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const signInWithGithub = (): void => {
+    const provider = new GithubAuthProvider();
+    signInWithPopup(auth, provider).then((res) => {
+      const user = formatUser(res.user);
+      createUser(user.uid, user);
+      setUser(user);
+    });
+  };
+
+  const signInWithGoogle = (): void => {
+    const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then((res) => {
       const user = formatUser(res.user);
       createUser(user.uid, user);
@@ -62,7 +72,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ signInWithGithub, signout, user }}>
+    <AuthContext.Provider
+      value={{ signInWithGithub, signInWithGoogle, signout, user }}
+    >
       {children}
     </AuthContext.Provider>
   );
