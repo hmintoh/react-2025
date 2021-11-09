@@ -3,22 +3,26 @@ import React, {
   useEffect,
   useContext,
   createContext,
-  ReactNode,
-} from 'react';
+  ReactNode
+} from "react";
 import {
   getAuth,
   signInWithPopup,
   GithubAuthProvider,
   GoogleAuthProvider,
   signOut,
-  onAuthStateChanged,
-} from 'firebase/auth';
-import { firebase } from 'lib/firebase';
-import { createUser } from 'lib/db';
-import { User } from 'utils/types';
+  onAuthStateChanged
+} from "firebase/auth";
+import { firebase } from "lib/firebase";
+import { createUser } from "lib/db";
+import { User } from "utils/types";
 
 interface AuthProviderProps {
   children: ReactNode;
+}
+
+interface UserWithToken extends User {
+  token: string;
 }
 
 const AuthContext = createContext<any>(null);
@@ -37,13 +41,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
   }, []);
 
-  const formatUser = (rawUser: any): User => {
+  const formatUser = (rawUser: any): UserWithToken => {
     return {
       uid: rawUser.uid,
       name: rawUser.displayName,
       email: rawUser.email,
+      token: rawUser.accessToken,
       provider: rawUser.providerData[0].providerId,
-      photoUrl: rawUser.photoURL,
+      photoUrl: rawUser.photoURL
     };
   };
 
@@ -51,7 +56,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const provider = new GithubAuthProvider();
     signInWithPopup(auth, provider).then((res) => {
       const user = formatUser(res.user);
-      createUser(user.uid, user);
+      const { token, ...userWithoutToken } = user;
+      createUser(user.uid, userWithoutToken);
       setUser(user);
     });
   };
@@ -60,7 +66,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then((res) => {
       const user = formatUser(res.user);
-      createUser(user.uid, user);
+      const { token, ...userWithoutToken } = user;
+      createUser(user.uid, userWithoutToken);
       setUser(user);
     });
   };

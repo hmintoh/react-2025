@@ -18,7 +18,7 @@
       "lib/*": ["lib/*"],
       "pages/*": ["pages/*"],
       "styles/*": ["styles/*"],
-      "componenets/*": ["componenets/*"],
+      "components/*": ["components/*"],
       "composites/*": ["composites/*"],
       "utils/*": ["utils/*"]
     }

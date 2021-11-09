@@ -1,12 +1,17 @@
-import useSWR from 'swr';
-import { fetcher } from 'utils/fetcher';
-import { Flex, Text } from '@chakra-ui/react';
+import useSWR from "swr";
+import { fetcher } from "utils/fetcher";
+import { Flex, Text } from "@chakra-ui/react";
+import { useAuth } from "lib/auth";
 
-import { DashboardLayout } from 'components/DashboardLayout';
-import { SitesDashboard } from 'composites/SitesDashboard';
+import { DashboardLayout } from "components/DashboardLayout";
+import { SitesDashboard } from "composites/SitesDashboard";
 
 const Dashboard = () => {
-  const { data } = useSWR('/api/sites', fetcher);
+  const auth = useAuth();
+  const { data } = useSWR(
+    auth.user ? ["/api/sites", auth.user.token] : null,
+    fetcher
+  );
 
   return !data ? (
     <Flex direction="column" height="100vh" align="center" justify="center">
