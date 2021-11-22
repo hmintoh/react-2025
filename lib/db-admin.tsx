@@ -42,4 +42,21 @@ const getAllSites = async () => {
   }
 };
 
-export { getAllFeedback, getAllSites };
+const getSitesByUser = async (userId: string) => {
+  try {
+    const results: SiteRes[] = [];
+    const snapshot = await getDocs(
+      query(collection(db, 'sites'), where('authorId', '==', userId))
+    );
+
+    snapshot.forEach((doc) => {
+      results.push({ id: doc.id, ...doc.data() } as SiteRes);
+    });
+
+    return { results };
+  } catch (error) {
+    return { error };
+  }
+};
+
+export { getAllFeedback, getAllSites, getSitesByUser };

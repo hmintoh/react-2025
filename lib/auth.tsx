@@ -3,19 +3,19 @@ import React, {
   useEffect,
   useContext,
   createContext,
-  ReactNode
-} from "react";
+  ReactNode,
+} from 'react';
 import {
   getAuth,
   signInWithPopup,
   GithubAuthProvider,
   GoogleAuthProvider,
   signOut,
-  onAuthStateChanged
-} from "firebase/auth";
-import { firebase } from "lib/firebase";
-import { createUser } from "lib/db";
-import { User } from "utils/types";
+  onAuthStateChanged,
+} from 'firebase/auth';
+import { firebase } from 'lib/firebase';
+import { createUser } from 'lib/db';
+import { User } from 'utils/types';
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       email: rawUser.email,
       token: rawUser.accessToken,
       provider: rawUser.providerData[0].providerId,
-      photoUrl: rawUser.photoURL
+      photoUrl: rawUser.photoURL,
     };
   };
 

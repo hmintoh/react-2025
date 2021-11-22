@@ -40,7 +40,7 @@ const AddSiteModal = ({ ctaLabel }: AddSiteModalProps) => {
       createdAt: new Date().toISOString(),
       ...data,
     };
-    mutate('/api/sites', createSite(newSite));
+    mutate(['/api/sites', auth.user.token], createSite(newSite));
     toast({
       position: 'bottom',
       isClosable: true,
